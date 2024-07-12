@@ -18,9 +18,9 @@ const ErrorPage = () => {
     return (
         <>
             <GuestNavigation />
-            <main className="flex items-center">
-                <h1>{title}</h1>
-                <p>{message}</p>
+            <main className="flex flex-col pt-20 gap-3 items-center mx-48">
+                <h1 className="text-4xl">{title}</h1>
+                <p className="text-2xl">{message}</p>
             </main>
         </>
     )

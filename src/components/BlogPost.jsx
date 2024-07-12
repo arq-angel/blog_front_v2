@@ -12,12 +12,12 @@ const BlogPost = ({post, isSinglePost = false}) => {
     return (
         <div className="mb-8">
             <h2 className="text-2xl font-bold">
-                <Link to="#" className="text-blue-500 hover:text-blue-700">
+                <Link to={`/posts/${post.slug}`} className="text-blue-500 hover:text-blue-700">
                     {post.title}
                 </Link>
             </h2>
             <p className="text-gray-600">
-                <Link to='#' className="ms-1 text-blue-500">
+                <Link to={`/?author=${post.author}`} className="ms-1 text-blue-500">
                     {post.author}
                 </Link>
             </p>
@@ -36,7 +36,7 @@ const BlogPost = ({post, isSinglePost = false}) => {
                 <p>{post.content}</p>
             </div>
             {!isSinglePost ? <Link
-                to="#"
+                to={`/posts/${post.slug}`}
                 className="bg-blue-500 text-white px-4 py-2 rounded"
             >
                 Read More <FontAwesomeIcon icon={faArrowRight} className="ms-2"/>

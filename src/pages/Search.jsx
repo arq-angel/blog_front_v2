@@ -4,7 +4,7 @@ import CategoriesList, {categoriesLoader} from "../components/CategoriesList.jsx
 import RecentPostsList, {recentPostsLoader} from "../components/RecentPostsList.jsx";
 import BlogSearch from "../components/BlogSearch.jsx";
 
-const HomePage = () => {
+const SearchPage = () => {
     return (<>
             <div className="flex flex-wrap">
                 {/* Blog Entries Column */}
@@ -28,7 +28,7 @@ const HomePage = () => {
     )
 }
 
-export default HomePage;
+export default SearchPage;
 
 export const loader = async () => {
     const [posts, categories, recentPosts] = await Promise.all([postsLoader(), categoriesLoader(), recentPostsLoader()]);
