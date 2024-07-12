@@ -31,6 +31,6 @@ const HomePage = () => {
 export default HomePage;
 
 export const loader = async () => {
-    const [posts, categories, recentPosts] = await Promise.all([postsLoader(), categoriesLoader(), recentPostsLoader()]);
-    return {posts, categories, recentPosts};
+    const [postsData, categories, recentPosts] = await Promise.all([postsLoader(), categoriesLoader(), recentPostsLoader()]);
+    return {postsData, categories, recentPosts};
 }

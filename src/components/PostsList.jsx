@@ -1,12 +1,18 @@
 import BlogPost from "./BlogPost.jsx";
 import {useRouteLoaderData, json} from "react-router-dom";
+import Pagination from "./Pagination.jsx";
 
 const PostsList = () => {
-    const {posts} = useRouteLoaderData('homePageData');
+    const {postsData} = useRouteLoaderData('homePageData');
+
+    const posts = postsData.posts;
+    const meta = postsData.meta;
+
     return (<>
         <ul>
             {posts && posts.map((post) => ((<BlogPost key={post.id} post={post}/>)))}
         </ul>
+        <Pagination meta={meta}/>
     </>)
 }
 
@@ -25,6 +31,6 @@ export const postsLoader = async () => {
         throw json({message: "Could not fetch posts"}, {status: 500});
     } else {
         const resData = await response.json();
-        return resData.posts;
+        return resData;
     }
 }
