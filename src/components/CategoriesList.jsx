@@ -1,4 +1,4 @@
-import {Link, useRouteLoaderData} from "react-router-dom";
+import {json, Link, useRouteLoaderData} from "react-router-dom";
 
 const CategoriesList = () => {
     const {categories} = useRouteLoaderData('homePageData');
@@ -26,28 +26,19 @@ const CategoriesList = () => {
 
 export default CategoriesList;
 
-export const categoriesLoader = () => {
-    return [
-        {
-            "id": 1, "title": "Artificial Intelligence", "slug": "artificial-intelligence"
-        }, {
-            "id": 2, "title": "Machine Learning", "slug": "machine-learning"
-        }, {
-            "id": 3, "title": "Data Science", "slug": "data-science"
-        }, {
-            "id": 4, "title": "Cybersecurity", "slug": "cybersecurity"
-        }, {
-            "id": 5, "title": "Blockchain", "slug": "blockchain"
-        }, {
-            "id": 6, "title": "Cloud Computing", "slug": "cloud-computing"
-        }, {
-            "id": 7, "title": "Internet of Things", "slug": "internet-of-things"
-        }, {
-            "id": 8, "title": "Software Development", "slug": "software-development"
-        }, {
-            "id": 9, "title": "Mobile Development", "slug": "mobile-development"
-    }, {
-        "id": 10, "title": "Web Development", "slug": "web-development"
+export const categoriesLoader = async () => {
+    const response = await fetch('http://blog-back.cc/api/homepage/categories', {
+        method: 'GET',
+        headers: {
+            'Accept': 'application/json',
+            "Public-Token": "2|LTBqZlXejYRxYHgpC6rHTSrnKSlIzimx9Jnxb73973c10e72",
+        }
+    })
+
+    if (!response.ok) {
+        throw json({message: "Could not fetch posts"}, {status: 500});
+    } else {
+        const resData = await response.json();
+        return resData.categories;
     }
-    ]
 }

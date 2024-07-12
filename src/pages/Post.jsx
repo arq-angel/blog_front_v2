@@ -1,7 +1,7 @@
 import BlogSearch from "../components/BlogSearch.jsx";
 import CategoriesList from "../components/CategoriesList.jsx";
 import RecentPostsList from "../components/RecentPostsList.jsx";
-import {useRouteLoaderData} from "react-router-dom";
+import {json, useRouteLoaderData} from "react-router-dom";
 import BlogPost from "../components/BlogPost.jsx";
 
 const PostPage = () => {
@@ -32,26 +32,20 @@ const PostPage = () => {
 
 export default PostPage;
 
-export const loader = async () => {
-    const POST = {
-        "id": 1,
-        "title": "Mr. Aiden Leuschke MD",
-        "slug": "explicabo-dolorem-veniam-assumenda-exercitationem-repellat-ipsam",
-        "author": "Dovie Weber",
-        "user": "wilfred42",
-        "image": "https://via.placeholder.com/640x480.png/00aa33?text=sint",
-        "content": "Itaque voluptatem ut rerum enim nihil quia. Deserunt possimus id debitis sed. Eligendi laborum cumque possimus vel sunt culpa. Laborum nulla ut sunt. Id quae pariatur aut accusamus id et.\n\nUt occaecati omnis voluptatem velit rerum sapiente. Nobis eum et aut reiciendis. Quis placeat velit iste tempora illum enim voluptatem. Nesciunt quia laborum rerum amet repellat occaecati modi nulla.\n\nFuga qui ea suscipit voluptatibus libero et. Delectus consequuntur voluptatem corrupti et rem. Neque fugit ut vel adipisci in illo exercitationem. Ut qui autem dolore rerum.\n\nDeserunt et ut nemo sequi quae officia. Rerum omnis perspiciatis esse dolorum et non. Dicta in laudantium mollitia. Assumenda aliquam nisi nihil.\n\nNihil illo accusamus possimus ab. Quia id accusantium quia architecto. Dolorum consequatur explicabo sed sed quibusdam. Voluptate ipsa aut error quo qui laborum. Error esse enim voluptas placeat consequatur cum.",
-        "tags": "rerum,laboriosam,quidem,et,deleniti",
-        "comments_count": "8",
-        "views_count": "353",
-        "likes_count": "375",
-        "created_at": "2024-07-03T12:31:10.000000Z",
-        "category": {
-            "id": 4,
-            "title": "Cybersecurity",
-            "slug": "cybersecurity"
+export const loader = async ({request, params}) => {
+    const postSlug = params.postSlug
+    const response = await fetch('http://blog-back.cc/api/posts/'+ postSlug, {
+        method: 'GET',
+        headers: {
+            'Accept': 'application/json',
+            "Public-Token": "2|LTBqZlXejYRxYHgpC6rHTSrnKSlIzimx9Jnxb73973c10e72",
         }
-    }
+    })
 
-    return POST;
+    if (!response.ok) {
+        throw json({message: "Could not fetch posts"}, {status: 500});
+    } else {
+        const resData = await response.json();
+        return resData.post;
+    }
 }
